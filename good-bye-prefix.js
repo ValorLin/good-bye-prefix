@@ -26,7 +26,7 @@
         var prefixedProperty = getPrefixedProperty(prop);
 
         if (!prefixedProperty) return;
-        console.log(prefixedProperty);
+
         Object.defineProperty(CSSStyleDeclaration.prototype, prop, {
             get: function () {
                 return this[prefixedProperty];
