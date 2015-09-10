@@ -40,8 +40,7 @@
     function getSpecialProperty(prefix) {
         return Array.prototype.slice.apply(_style)
             .filter(function (prop) {
-                // 找到独有的属性
-                return prop.indexOf(prefix) > -1;
+                return prop.indexOf('-' + prefix) === 0;
             })
             .map(function (prop) {
                 return prop
