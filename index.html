@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Good Bye Prefix</title>
+    <style type="text/css">
+        .block {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="block"></div>
+<script type="text/javascript" src="good-bye-prefix.js"></script>
+<script type="text/javascript">
+    // Say good bye to the prefix
+
+    document.querySelector('.block').style.transform = 'scale(2)';
+    // Equal to
+    // document.querySelector('.block').style.webkitTransform = 'scale(2)';
+    // document.querySelector('.block').style.MozTransform = 'scale(2)';
+    // document.querySelector('.block').style.msTransform = 'scale(2)';
+    // document.querySelector('.block').style.OTransform = 'scale(2)';
+    // document.querySelector('.block').style.transform = 'scale(2)';
+
+    document.querySelector('.block').style.transformOrigin = 'top left';
+    // Equal to
+    // document.querySelector('.block').style.webkitTransformOrigin = 'scale(2)';
+    // document.querySelector('.block').style.MozTransformOrigin = 'scale(2)';
+    // document.querySelector('.block').style.msTransformOrigin = 'scale(2)';
+    // document.querySelector('.block').style.OTransformOrigin = 'scale(2)';
+    // document.querySelector('.block').style.transformOrigin = 'scale(2)';
+
+</script>
+</body>
+</html>
