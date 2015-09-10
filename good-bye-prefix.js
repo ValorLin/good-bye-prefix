@@ -19,7 +19,7 @@
         return prefixedProp;
     }
 
-    function prefixProperty(prop) {
+    function goodByPrefix(prop) {
         // Do nothing if already supported
         if (isPropertySupported(prop)) return;
 
@@ -52,8 +52,8 @@
             });
     }
 
-    getSpecialProperty('webkit').forEach(prefixProperty);
-    getSpecialProperty('moz').forEach(prefixProperty);
-    getSpecialProperty('ms').forEach(prefixProperty);
-    getSpecialProperty('o').forEach(prefixProperty);
+    getSpecialProperty('webkit').forEach(goodByPrefix);
+    getSpecialProperty('moz').forEach(goodByPrefix);
+    getSpecialProperty('ms').forEach(goodByPrefix);
+    getSpecialProperty('o').forEach(goodByPrefix);
 })();
