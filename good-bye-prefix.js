@@ -8,7 +8,7 @@
         return typeof _style[prop] === 'string';
     }
 
-    function getPrefixedProperty(prop) {
+    function addPrefix(prop) {
         var prefixedProp = '';
         ['webkit', 'Moz', 'ms', 'O']
             .forEach(function (prefix) {
@@ -24,10 +24,11 @@
         // Do nothing if already supported
         if (isPropertySupported(prop)) return;
 
-        var prefixedProperty = getPrefixedProperty(prop);
+        var prefixedProperty = addPrefix(prop);
 
         if (!prefixedProperty) return;
 
+        // No prefixed property as ailed of prefixed property
         Object.defineProperty(CSSStyleDeclaration.prototype, prop, {
             get: function () {
                 return this[prefixedProperty];
