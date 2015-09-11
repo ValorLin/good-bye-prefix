@@ -10,12 +10,13 @@
 
     function getPrefixedProperty(prop) {
         var prefixedProp = '';
-        ['webkit', 'Moz', 'ms', 'O'].forEach(function (prefix) {
-            var Prop = prop[0].toUpperCase() + prop.substr(1);
-            if (isPropertySupported(prefix + Prop)) {
-                prefixedProp = prefix + Prop;
-            }
-        });
+        ['webkit', 'Moz', 'ms', 'O']
+            .forEach(function (prefix) {
+                var Prop = prop[0].toUpperCase() + prop.substr(1);
+                if (isPropertySupported(prefix + Prop)) {
+                    prefixedProp = prefix + Prop;
+                }
+            });
         return prefixedProp;
     }
 
@@ -37,7 +38,7 @@
         });
     }
 
-    function getSpecialProperty(prefix) {
+    function getBrowserSpecialProperty(prefix) {
         return Array.prototype.slice.apply(_style)
             .filter(function (prop) {
                 return prop.indexOf('-' + prefix) === 0;
@@ -51,8 +52,8 @@
             });
     }
 
-    getSpecialProperty('webkit').forEach(goodByPrefix);
-    getSpecialProperty('moz').forEach(goodByPrefix);
-    getSpecialProperty('ms').forEach(goodByPrefix);
-    getSpecialProperty('o').forEach(goodByPrefix);
+    getBrowserSpecialProperty('webkit').forEach(goodByPrefix);
+    getBrowserSpecialProperty('moz').forEach(goodByPrefix);
+    getBrowserSpecialProperty('ms').forEach(goodByPrefix);
+    getBrowserSpecialProperty('o').forEach(goodByPrefix);
 })();
