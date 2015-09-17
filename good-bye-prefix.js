@@ -19,12 +19,13 @@
         return prefixedProp;
     }
 
-    function goodByPrefix(root) {
+    function goodByPrefix(root, compareRoot) {
+        compareRoot = compareRoot || root;
         return function (property) {
             // Do nothing if already supported
-            if (isPropertySupported(root, property)) return;
+            if (isPropertySupported(compareRoot, property)) return;
 
-            var prefixedProperty = getPrefixedProperty(root, property);
+            var prefixedProperty = getPrefixedProperty(compareRoot, property);
 
             if (!prefixedProperty) return;
             setAlia(root, property, prefixedProperty);
@@ -32,6 +33,7 @@
     }
 
     function setAlia(root, property, prefixedProperty) {
+        console.log('setAlia', root, property, prefixedProperty);
         Object.defineProperty(root, property, {
             get: function () {
                 return this[prefixedProperty];
@@ -56,7 +58,7 @@
             });
     }
 
-    function getSpecialDocumentProperty(properties, prefix) {
+    function getSpecialObjectProperty(properties, prefix) {
         return properties
             .filter(function (prop) {
                 return prop.indexOf(prefix) === 0;
@@ -69,18 +71,27 @@
             });
     }
 
-    var styleProperties = Array.prototype.slice.apply(_style);
-    getSpecialCSSProperty(styleProperties, 'webkit').forEach(goodByPrefix(_style));
-    getSpecialCSSProperty(styleProperties, 'moz').forEach(goodByPrefix(_style));
-    getSpecialCSSProperty(styleProperties, 'ms').forEach(goodByPrefix(_style));
-    getSpecialCSSProperty(styleProperties, 'o').forEach(goodByPrefix(_style));
-
-    var documentProperties = [];
-    for (var key in document) {
-        documentProperties.push(key);
+    function goodByPrefixForObject(root, compareRoot) {
+        var properties = [];
+        for (var key in root) {
+            properties.push(key);
+        }
+        getSpecialObjectProperty(properties, 'webkit').forEach(goodByPrefix(root, compareRoot));
+        getSpecialObjectProperty(properties, 'moz').forEach(goodByPrefix(root, compareRoot));
+        getSpecialObjectProperty(properties, 'ms').forEach(goodByPrefix(root, compareRoot));
+        getSpecialObjectProperty(properties, 'o').forEach(goodByPrefix(root, compareRoot));
     }
-    getSpecialDocumentProperty(documentProperties, 'webkit').forEach(goodByPrefix(document));
-    getSpecialDocumentProperty(documentProperties, 'moz').forEach(goodByPrefix(document));
-    getSpecialDocumentProperty(documentProperties, 'ms').forEach(goodByPrefix(document));
-    getSpecialDocumentProperty(documentProperties, 'o').forEach(goodByPrefix(document));
+
+    function goodByePrefixForStyle() {
+        var styleProperties = Array.prototype.slice.apply(_style);
+        getSpecialCSSProperty(styleProperties, 'webkit').forEach(goodByPrefix(CSSStyleDeclaration.prototype, _style));
+        getSpecialCSSProperty(styleProperties, 'moz').forEach(goodByPrefix(CSSStyleDeclaration.prototype, _style));
+        getSpecialCSSProperty(styleProperties, 'ms').forEach(goodByPrefix(CSSStyleDeclaration.prototype, _style));
+        getSpecialCSSProperty(styleProperties, 'o').forEach(goodByPrefix(CSSStyleDeclaration.prototype, _style));
+    }
+
+    goodByePrefixForStyle();
+    goodByPrefixForObject(document);
+    goodByPrefixForObject(window);
+    goodByPrefixForObject(navigator);
 })();
