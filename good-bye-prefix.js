@@ -33,7 +33,6 @@
     }
 
     function setAlia(root, property, prefixedProperty) {
-        console.log('setAlia', root, property, prefixedProperty);
         Object.defineProperty(root, property, {
             get: function () {
                 return this[prefixedProperty];
